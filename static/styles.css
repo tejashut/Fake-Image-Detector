@@ -1,0 +1,136 @@
+.navbar {
+    padding: 1rem;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    margin-left: 23%;
+}
+
+.nav-item {
+    font-size: 1.2rem;
+    margin-left: 2rem;
+}
+
+/* Heading of the page */
+.heading {
+    padding-left: 5rem;
+    padding-right: 15rem;
+    margin-top: 8%;
+}
+
+.heading h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.page-banner img {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.heading button {
+    width: 40%;
+}
+
+.Forgot {
+    width: 30%;
+    margin-top: 10%;
+}
+
+.img1 {
+    display: flex;
+    height: 400px;
+
+}
+/* --------------------------------------------------------------- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+main {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.container {
+    /* display: flex; */
+    max-width: 100%;
+    margin: 0 auto;
+    /* border: 3px solid #fff; */
+
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.row {
+    border: 0;
+    margin: 0;
+}
+
+.upload-container {
+    border: 3px solid #d50fe7;
+    padding: 60px;
+    cursor: pointer;
+    height: 300px;
+    cursor: pointer;
+    width: 30%;
+    margin-top: 0;
+    margin-left: 5%;
+    box-shadow: 20px 20px 50px grey;
+    border-radius: 25px;
+}
+
+.button {
+    display: inline;
+}
+
+.upload-box p {
+    margin: 0;
+}
+
+button#submitBtn {
+    padding: 10px 10px;
+    /* Increased width */
+    background-color: #8a07f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 20%;
+    box-shadow: 20px 20px 50px grey;
+
+}
+
+button#submitBtn:hover {
+    background-color: #6a06bd;
+}

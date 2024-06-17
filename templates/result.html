@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <!-- Add any necessary CSS here -->
+</head>
+
+<body>
+    <div class="container">
+        <h1>Analysis Result</h1>
+        <h3>Error Level Analysis</h3>
+        <div id="error-level-analysis"></div>
+        <h3>Gradient Descent</h3>
+        <div id="gradient-descent"></div>
+        <h3>Metadata Analysis</h3>
+        <div id="metadata-analysis"></div>
+    </div>
+
+    <!-- Add any necessary JavaScript here -->
+    <script>
+        var result = '{{ result_json | safe | tojson | escape }}';
+        result = JSON.parse(result);
+        console.log(result); // Log the result object to the console
+        
+        // Check if the result contains an error
+        if (result.hasOwnProperty('error')) {
+            document.getElementById('error-message').innerHTML = '<h2>Error</h2>' + result.error;
+        } else {
+            // Access the individual keys of the result object
+            var errorLevelAnalysis = result.error_level_analysis;
+            var gradientDescent = result.gradient_descent;
+            var metadataAnalysis = result.metadata_analysis;
+    
+            // Display Error Level Analysis result
+            document.getElementById('error-level-analysis').innerHTML = '<h2>Error Level Analysis</h2>' + errorLevelAnalysis;
+    
+            // Display Gradient Descent result
+            document.getElementById('gradient-descent').innerHTML = '<h2>Gradient Descent</h2>' + gradientDescent;
+    
+            // Display Metadata Analysis result
+            document.getElementById('metadata-analysis').innerHTML = '<h2>Metadata Analysis</h2>' + metadataAnalysis;
+        }
+    </script>
+    
+
+</body>
+
+</html>

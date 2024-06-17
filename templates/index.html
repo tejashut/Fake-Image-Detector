@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Image Detection</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-white rounded">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">FakeImageDetection</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row">
+        <main>
+            <form method="POST" action="/upload" enctype="multipart/form-data" id="upload-form">
+                <h3>Upload Image</h3>
+                <div class="container">
+                    <div class="img1">
+                        <img src="https://miro.medium.com/v2/resize:fit:1400/0*orgImG-a3zZyorWn" alt="">
+
+                        <div id="upload-container" class="upload-container">
+                            <p>Click here to upload image or drag and drop</p>
+                            <img src="https://static.thenounproject.com/png/49665-200.png">
+                            <input type="file" name="image" id="fileInput" accept="image/*" style="display: none;">
+                        </div>
+
+                    </div>
+                    <button id="submitBtn" type="submit">Submit</button>
+                    <div id="imagePreview"></div>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script>
+        window.onload = function () {
+            var dropZone = document.getElementById('upload-container');
+            var uploadForm = document.getElementById('upload-form');
+
+            // Prevent default behavior for drag and drop
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            // Function to prevent default behavior
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            // Highlight drop zone when dragging over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            // Function to highlight drop zone
+            function highlight() {
+                dropZone.classList.add('highlight');
+            }
+
+            // Function to remove highlight from drop zone
+            function unhighlight() {
+                dropZone.classList.remove('highlight');
+            }
+
+            // Handle dropped files
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            // Function to handle dropped files
+            function handleDrop(e) {
+                var dt = e.dataTransfer;
+                var files = dt.files;
+
+                handleFiles(files);
+            }
+
+            // Function to handle files
+            function handleFiles(files) {
+                var file = files[0];
+                uploadFile(file);
+            }
+
+            // Function to upload file to the server
+            function uploadFile(file) {
+                var formData = new FormData();
+                formData.append('image', file);
+
+                // Send file to Flask app for further processing
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('File uploaded successfully');
+                            return response.json(); // Parse response as JSON
+                        } else {
+                            console.error('Upload failed');
+                            // Handle error response if needed
+                        }
+                    })
+                    .then(data => {
+                        // Redirect to result page with result data as a query parameter
+                        window.location.href = `/result?result=${JSON.stringify(data)}`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Handle network errors if needed
+                    });
+            }
+
+            // Trigger file selection when clicking on the upload container
+            dropZone.addEventListener('click', function () {
+                document.getElementById('fileInput').click();
+            });
+
+            // Handle file selection from input
+            document.getElementById('fileInput').addEventListener('change', function () {
+                var files = this.files;
+                handleFiles(files);
+            });
+
+            // Handle form submission
+            uploadForm.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent default form submission
+                var files = document.getElementById('fileInput').files;
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
+            });
+        };
+    </script>
+
+</body>
+
+</html>
